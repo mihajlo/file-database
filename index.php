@@ -14,6 +14,22 @@ $db=new filedb('mihajlo');
 
 
 
+
+$db->update(
+        'korisnici',
+        array('surname'=>'Siljanoska','name'=>'Aleksandra','address'=>false),
+        array('_id'=>1)
+    );
+
+
+/*
+$db->update(
+        'korisnici',
+        array('surname'=>'Siljanoska','name'=>'Aleksandra','address'=>'Kozle 88/2-2'),
+        array('name%'=>'Mihajlo')
+    );
+*/
+
 //something like: SELECT * FROM korisnici WHERE _id='1' AND name LIKE '%Mihajlo%' AND surname LIKE '%oski_%'
 /*
 $results=$db->get('korisnici',array('name%'=>'Mihajlo','surname%'=>'oski_','_id'=>2));
