@@ -74,6 +74,21 @@ class filedb {
     }
     
     
+    public function delete($table=false,$where=array()){
+        
+        if(!$table || !$where){
+            return false;
+        }
+        $results=$this->get($table,$where);
+        
+        foreach($results as $item){
+            
+            @unlink($this->path.'/'.$this->db.'/'.$table.'/'.$item['_id']);
+        }
+        return true;
+    }
+    
+    
     public function drop_table($table=false) {
         @$this->rrmdir($this->path.'/'.$this->db.'/'.$table);
         @unlink($this->path.'/'.$this->db.'/'.$table.'.scheme');
@@ -92,6 +107,7 @@ class filedb {
         
         $returnArr=array();
         $scanDir=  scandir($this->path.'/'.$this->db.'/'.$table);
+        
         unset($scanDir[0]);
         unset($scanDir[1]);
         foreach(array_values($scanDir) as $key=>$record){
@@ -100,7 +116,7 @@ class filedb {
                 $acceptRow = true;
                 foreach ($where as $k => $v) {
                     if (substr($k, -1) == '%') {
-                        if (strstr(@$tmpData[substr($k,0,strlen($k)-1)],$v)) {
+                        if (stristr(@$tmpData[substr($k,0,strlen($k)-1)],$v)) {
                             $acceptRow = true;
                         } else {
                             $acceptRow = false;
