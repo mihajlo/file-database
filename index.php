@@ -14,13 +14,20 @@ $db=new filedb('mihajlo');
 
 
 
-
+/*
 $db->update(
         'korisnici',
-        array('surname'=>'Siljanoska','name'=>'Aleksandra','address'=>false),
+        array('surname'=>'Siljanoska','name'=>'Aleksandra','server_info'=>false),
         array('_id'=>1)
-    );
+);
+*/
 
+/*
+$db->delete(
+        'korisnici',
+        array('name%'=>'Mihajlo')
+);
+*/
 
 /*
 $db->update(
