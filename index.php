@@ -1,52 +1,57 @@
 <?php
-set_time_limit(60*60);
+
+
 require_once 'lib/filedb.php';
 
-$db=new filedb('mihajlo');
+$db=new filedb('testdatabase');
+
+
+//if you like to drop database and all tables
+$db->drop_database();
+
+//if you like to drop user table
+$db->drop_table('user');
+
+
+//if you like to create user table
+$db->create_table('user');
 
 
 
-//$db->drop_database();
-
-//$db->drop_table('user');
-
-//$db->create_table('user');
+//if you like to add record in user table if table user doesn't exist automaticaly will be created
+$db->insert('user',['name'=>'Mihajlo','surname'=>'Siljanoski','web'=>'http://1mk.org/','username'=>'admin','password'=>md5('admin')]);
 
 
 
-/*
+//to update record in user table
 $db->update(
-        'korisnici',
-        array('surname'=>'Siljanoska','name'=>'Aleksandra','server_info'=>false),
-        array('_id'=>1)
+        'user',
+        ['surname'=>'Siljanoski updated','web'=>false,'address'=>'Test address'],//address will be added and web will be deleted
+        ['_id'=>1,'name%'=>'mihajlo'] // where ID =1 AND name LIKE '%mihajlo%'
 );
-*/
 
-/*
+
+//to delete record with _id=5
 $db->delete(
-        'korisnici',
-        array('name%'=>'Mihajlo')
+        'user',
+        ['_id'=>5]
 );
-*/
 
-/*
-$db->update(
-        'korisnici',
-        array('surname'=>'Siljanoska','name'=>'Aleksandra','address'=>'Kozle 88/2-2'),
-        array('name%'=>'Mihajlo')
+
+//fetch records from database  something like SELECT * FROM users WHERE name='Mihajlo' AND surname LIKE '%ski%'
+$results=$db->get('user',
+        [
+            'name'=>'Mihajlo',
+            'surname%'=>'ski',
+        ]
     );
-*/
-
-//something like: SELECT * FROM korisnici WHERE _id='1' AND name LIKE '%Mihajlo%' AND surname LIKE '%oski_%'
-/*
-$results=$db->get('korisnici',array('name%'=>'Mihajlo','surname%'=>'oski_','_id'=>2));
 print_r($results);
-*/
+
 
 
 /*
 for($i=1;$i<=5;$i++){
-    $db->insert('korisnici',array('name'=>'Mihajlo_'.$i,'surname'=>'Siljanoski_'.$i));
+    
 }
  */
 
