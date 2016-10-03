@@ -8,7 +8,7 @@ $db=new filedb('testdatabase');
 
 
 //if you like to drop database and all tables
-$db->drop_database();
+//$db->drop_database();
 
 //if you like to drop user table
 $db->drop_table('user');
