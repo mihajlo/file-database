@@ -50,6 +50,29 @@ class filedb {
         
     }
     
+    public function update($table=false,$data=array(),$where=array()){
+        
+        if(!$table || !$data){
+            return false;
+        }
+        $results=$this->get($table,$where);
+        
+        foreach($results as $item){
+            $newdata=$item;
+            foreach($data as $k=>$v){
+                if($k!='_id'){
+                    $newdata[$k]=$v;
+                }
+                if(!$v){
+                    unset($newdata[$k]);
+                }
+            }
+            //print_r($newdata);
+            @file_put_contents($this->path.'/'.$this->db.'/'.$table.'/'.$newdata['_id'], json_encode($newdata));
+        }
+        return true;
+    }
+    
     
     public function drop_table($table=false) {
         @$this->rrmdir($this->path.'/'.$this->db.'/'.$table);
