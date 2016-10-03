@@ -13,8 +13,18 @@ $db=new filedb('mihajlo');
 //$db->create_table('user');
 
 
+
+//something like: SELECT * FROM korisnici WHERE _id='1' AND name LIKE '%Mihajlo%' AND surname LIKE '%oski_%'
+/*
+$results=$db->get('korisnici',array('name%'=>'Mihajlo','surname%'=>'oski_','_id'=>2));
+print_r($results);
+*/
+
+
+/*
 for($i=1;$i<=5;$i++){
-    $db->insert('user'.$i,array('name'=>'Mihajlo_'.$i,'surname'=>'Siljanoski_'.$i));
+    $db->insert('korisnici',array('name'=>'Mihajlo_'.$i,'surname'=>'Siljanoski_'.$i));
 }
+ */
 
 
