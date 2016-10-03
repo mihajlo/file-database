@@ -1,5 +1,6 @@
 <?php
 
+//Example of use
 
 require_once 'lib/filedb.php';
 
@@ -48,11 +49,5 @@ $results=$db->get('user',
 print_r($results);
 
 
-
-/*
-for($i=1;$i<=5;$i++){
-    
-}
- */
 
 
