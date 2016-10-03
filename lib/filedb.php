@@ -62,6 +62,55 @@ class filedb {
         return true;
     }
     
+    public function get($table=false,$where=false){
+        if(!$table){
+            return array();
+        }
+        
+        $returnArr=array();
+        $scanDir=  scandir($this->path.'/'.$this->db.'/'.$table);
+        unset($scanDir[0]);
+        unset($scanDir[1]);
+        foreach(array_values($scanDir) as $key=>$record){
+            if (is_array($where)) {
+                $tmpData = json_decode(@file_get_contents($this->path . '/' . $this->db . '/' . $table . '/' . $record), true);
+                $acceptRow = true;
+                foreach ($where as $k => $v) {
+                    if (substr($k, -1) == '%') {
+                        if (strstr(@$tmpData[substr($k,0,strlen($k)-1)],$v)) {
+                            $acceptRow = true;
+                        } else {
+                            $acceptRow = false;
+                            break;
+                        }
+                    } 
+                    else {
+                        if (@$tmpData[$k] == $v) {
+                            $acceptRow = true;
+                        } else {
+                            $acceptRow = false;
+                            break;
+                        }
+                    }
+                }
+                if ($acceptRow) {
+                    $returnArr[] = $tmpData;
+                }
+            } else{
+                $returnArr[]=json_decode(@file_get_contents($this->path.'/'.$this->db.'/'.$table.'/'.$record),true);
+                unset($scanDir[$key]);
+            }
+        }
+        
+        return $returnArr;
+        
+    }
+    
+    
+    
+    
+    
+    
     
     private function rrmdir($dir) {
         foreach (glob($dir . '/*') as $file) {
