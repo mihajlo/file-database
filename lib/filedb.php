@@ -107,7 +107,7 @@ class filedb {
         
         $returnArr=array();
         $scanDir=  scandir($this->path.'/'.$this->db.'/'.$table);
-        
+        sort($scanDir);
         unset($scanDir[0]);
         unset($scanDir[1]);
         foreach(array_values($scanDir) as $key=>$record){
