@@ -30,7 +30,7 @@ class filedb {
         return false;
     }
     
-    public function insert($table=false,$data=array()){
+    public function insert($table=false,$data=array(),$is_object=false){
         
         $this->create_table($table);
         
@@ -44,6 +44,9 @@ class filedb {
         $id=(int)file_get_contents($this->path.'/'.$this->db.'/'.$table.'.scheme');
         if(@file_put_contents($this->path.'/'.$this->db.'/'.$table.'/'.$id.'', json_encode(array_merge(array('_id'=>$id),$data)))){
             file_put_contents($this->path.'/'.$this->db.'/'.$table.'.scheme', $id+1);
+            if($is_object){
+               return (object)array_merge(array('_id'=>$id),$data);
+            }
             return array_merge(array('_id'=>$id),$data);
         }
         return false;
@@ -100,10 +103,22 @@ class filedb {
         return true;
     }
     
-    public function get($table=false,$where=false){
+    public function get($table=false,$where=false,$join=false){
         if(!$table){
             return array();
         }
+        
+        if(@$where['_id'] && count(@$where)==1){
+            $result=json_decode(@file_get_contents($this->path.'/'.$this->db.'/'.$table.'/'.@$where['_id']),true);
+            if($join){
+                        foreach($join as $jk=>$jv){
+                            $whereKeyTmp=$result[$jk];
+                            $result[$jk]=$this->get($jv[0],[$jv[1]=>$whereKeyTmp])[0];
+                        }
+                    }
+	    return array($result);
+        }
+        
         
         $returnArr=array();
         $scanDir=  scandir($this->path.'/'.$this->db.'/'.$table);
@@ -133,6 +148,12 @@ class filedb {
                     }
                 }
                 if ($acceptRow) {
+                    if($join){
+                        foreach($join as $jk=>$jv){
+                            $whereKeyTmp=$tmpData[$jk];
+                            $tmpData[$jk]=$this->get($jv[0],[$jv[1]=>$whereKeyTmp])[0];
+                        }
+                    }
                     $returnArr[] = $tmpData;
                 }
             } else{
