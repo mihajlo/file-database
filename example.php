@@ -39,7 +39,7 @@ $db->delete(
 );
 
 
-//fetch records from database  something like SELECT * FROM users WHERE name='Mihajlo' AND surname LIKE '%ski%'
+//fetch records from database something like SELECT * FROM users WHERE name='Mihajlo' AND surname LIKE '%ski%'
 $results=$db->get('user',
         [
             'name'=>'Mihajlo',
@@ -47,7 +47,3 @@ $results=$db->get('user',
         ]
     );
 print_r($results);
-
-
-
-
