@@ -105,12 +105,6 @@ class filedb {
             return array();
         }
         
-        if(@$where['_id'] && count(@$where)==1){
-            $result=json_decode(@file_get_contents($this->path.'/'.$this->db.'/'.$table.'/'.@$where['_id']),true);
-	    return array($result);
-        }
-        
-        
         $returnArr=array();
         $scanDir=  scandir($this->path.'/'.$this->db.'/'.$table);
         sort($scanDir);
