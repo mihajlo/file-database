@@ -168,6 +168,59 @@ class filedb {
     
     
     
+    public function save($partition=false,$key=false,$data=array()){
+        
+        if(!$partition || !$key){
+            return false;
+        }
+        
+        
+        if(!file_exists($this->path.'/'.$this->db.'/storage')){
+            @mkdir($this->path.'/'.$this->db.'/storage');
+        }
+        
+        if(!file_exists($this->path.'/'.$this->db.'/storage/'.$partition)){
+            @mkdir($this->path.'/'.$this->db.'/storage/'.$partition);
+        }
+        
+        if(file_exists($this->path.'/'.$this->db.'/storage/'.$partition.'/'.$key)){
+            $tmpData=json_decode(@file_get_contents($this->path.'/'.$this->db.'/storage/'.$partition.'/'.$key),true);
+            foreach($tmpData as $k=>$v){
+                $data[$k]=$v;
+            }
+        }
+        
+        if(@file_put_contents($this->path.'/'.$this->db.'/storage/'.$partition.'/'.$key, json_encode($data))){
+            return true;
+        }
+        return false;
+    }
+    
+    public function read($partition=false,$key=false){
+        if(!$partition){
+            return false;
+        }
+        
+        if(!$key){
+            $list=@scandir($this->path.'/'.$this->db.'/storage/'.$partition);
+            unset($list[0]);
+            unset($list[1]);
+            sort($list);
+            return $list;
+        }
+        
+        return @json_decode(@file_get_contents($this->path.'/'.$this->db.'/storage/'.$partition.'/'.$key),true);
+    }
+    
+    public function remove($partition=false,$key=false){
+        if(!$partition || !$key){
+            return false;
+        }
+        if(@unlink($this->path.'/'.$this->db.'/storage/'.$partition.'/'.$key)){
+            return true;
+        }
+        return false;
+    }
     
     
     
