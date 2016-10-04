@@ -1,8 +1,12 @@
 <?php
 /**
- * Description of filedb
+ * Non-sql database based on file system. 
  *
- * @author mihajlo
+ * @author Mihajlo Siljanoski
+ * @url https://mk.linkedin.com/in/msiljanoski
+ * @email mihajlo.siljanoski@gmail.com
+ * @skype mihajlo.siljanoski
+ * 
  */
 class filedb {
     //put your code here
