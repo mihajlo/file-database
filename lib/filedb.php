@@ -1,4 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
+namespace FileDatabase;
+
+use RuntimeException;
+
 /**
  * Non-sql database based on file system.
  *
@@ -7,7 +14,7 @@
  * @email mihajlo.siljanoski@gmail.com
  * @skype mihajlo.siljanoski
  */
-class filedb {
+class FileDB {
     /**
      * @var string
      */
@@ -439,3 +446,5 @@ class filedb {
         return $decoded;
     }
 }
+
+\class_alias(FileDB::class, 'filedb');

@@ -2,9 +2,11 @@
 
 //example of using as free storage
 
+use FileDatabase\FileDB;
+
 require_once 'lib/filedb.php';
 
-$storage = new filedb('exampledb');
+$storage = new FileDB('exampledb');
 
 
 $storage->save('users','mihajlo.siljanoski',[

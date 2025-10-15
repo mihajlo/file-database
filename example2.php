@@ -1,6 +1,9 @@
 <?php
+
+use FileDatabase\FileDB;
+
 require_once 'lib/filedb.php';
-$fdb=new filedb('anotherdatabase');
+$fdb = new FileDB('anotherdatabase');
 
 
 

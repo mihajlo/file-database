@@ -2,9 +2,12 @@
 
 //Example of use
 
+use FileDatabase\FileDB;
+
 require_once 'lib/filedb.php';
 
-$db=new filedb('testdatabase');
+$db = new FileDB('testdatabase');
+// Backwards compatibility: $db = new filedb('testdatabase');
 
 
 //if you like to drop database and all tables
